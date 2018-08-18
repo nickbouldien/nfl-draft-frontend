@@ -17,16 +17,24 @@ function make(player, _) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              return React.createElement("div", undefined, player);
+              return React.createElement("div", undefined, React.createElement("input", {
+                              className: "input-",
+                              type: "text"
+                            }), player);
             }),
-          /* initialState */component[/* initialState */10],
+          /* initialState */(function () {
+              return /* Loading */1;
+            }),
           /* retainedProps */component[/* retainedProps */11],
           /* reducer */component[/* reducer */12],
           /* jsElementWrapped */component[/* jsElementWrapped */13]
         ];
 }
 
+var url = "http://localhost:8080";
+
 export {
+  url ,
   component ,
   make ,
   
