@@ -2,12 +2,12 @@
 
 import * as ReactDOMRe from "reason-react/src/ReactDOMRe.js";
 import * as ReasonReact from "reason-react/src/ReasonReact.js";
-import * as Component1$ReactTemplate from "./Component1.bs.js";
-import * as Component2$ReactTemplate from "./Component2.bs.js";
+import * as Component1$Nfldraftreason from "./Component1.bs.js";
+import * as Component2$Nfldraftreason from "./Component2.bs.js";
 
-ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Component1$ReactTemplate.make("Hello!", /* array */[])), "index1");
+ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Component1$Nfldraftreason.make("Hello!", /* array */[])), "index1");
 
-ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Component2$ReactTemplate.make("nick!", /* array */[])), "index2");
+ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Component2$Nfldraftreason.make("nick!", /* array */[])), "index2");
 
 export {
   

@@ -1,9 +1,5 @@
-/* This is the BuckleScript configuration file. Note that this is a comment;
-  BuckleScript comes with a JSON parser that supports comments and trailing
-  comma. If this screws with your editor highlighting, please tell us by filing
-  an issue! */
 {
-  "name": "react-template",
+  "name": "nfl_draft_reason",
   "reason": {
     "react-jsx": 2
   },
@@ -19,7 +15,8 @@
   "namespace": true,
   "bs-dependencies": [
     "reason-react",
-    "bs-fetch"
+    "bs-fetch",
+    "@glennsl/bs-json"
   ],
   "refmt": 3
 }

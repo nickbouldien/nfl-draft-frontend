@@ -1,6 +1,5 @@
 /* TODO: find out how to use env vars and make this dynamic */
-let url = "http://localhost:8080";
-/* let str = ReasonReact.stringToElement; */
+let rootUrl = "http://localhost:8080";
 
 type player = {
   id: int,
@@ -22,12 +21,12 @@ type action =
   | PlayersFetched(array(player))
   | PlayersFailedToFetch;
 
-/* module Decode = {
+module Decode = {
   let players = json: array(player) =>
     Json.Decode.(
       json |> Array.map(_, player => player)
     );
-}; */
+};
 
 module Player = {
   let component = ReasonReact.statelessComponent("Player");
@@ -40,6 +39,34 @@ module Player = {
   }
 };
 
+let valueFromEvent = (evt) : string => (
+  evt
+  |> ReactEventRe.Form.target
+  |> ReactDOMRe.domElementToObj
+)##value;
+
+module Input = {
+  type state = string;
+  let component = ReasonReact.reducerComponent("Input");
+  let make = (~onSubmit, _) => {
+    ...component,
+    initialState: () => "",
+    reducer: (newQuery, _text) => ReasonReact.Update(newQuery),
+    render: ({state: text, reduce}) =>
+      <input
+        value=text
+        _type="text"
+        placeholder="Write something to do"
+        onChange=(reduce((evt) => valueFromEvent(evt)))
+        onKeyDown=((evt) =>
+          if (ReactEventRe.Keyboard.key(evt) == "Enter") {
+            onSubmit(text);
+            (reduce(() => ""))()
+          }
+        )
+      />
+  };
+};
 
 let sendQuery = (evt) => Js.log("sendQuery called");
 
@@ -47,13 +74,30 @@ let component = ReasonReact.reducerComponent("PlayerList");
 
 let make = (children) => {
   ...component,
-  initialState: () => {
-    /* Loading, */
-    players: []
-  },
-  reducer: ((action), state) =>
+  initialState: () => Loading,
+  reducer: (action, state) =>
     switch action {
-    | PlayerFetch => ReasonReact.NoUpdate
+    | PlayerFetch =>
+      ReasonReact.UpdateWithSideEffects(
+        Loading,
+        (
+          self =>
+            Js.Promise.(
+              Fetch.fetch(rootUrl)
+              |> then_(Fetch.Response.json)
+              |> then_(json =>
+                  json
+                  |> Decode.players
+                  |> (players => self.send(PlayersFetched(players)))
+                  |> resolve
+                )
+              |> catch(_err =>
+                  Js.Promise.resolve(self.send(PlayersFailedToFetch))
+                )
+              |> ignore
+            )
+        ),
+      )
     | PlayersFetched(_) => ReasonReact.NoUpdate
     | PlayersFailedToFetch => ReasonReact.NoUpdate
   },
