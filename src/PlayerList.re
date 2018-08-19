@@ -1,5 +1,5 @@
 /* TODO: find out how to use env vars and make this dynamic */
-let rootUrl = "http://localhost:8080";
+let rootUrl = "http://localhost:8080/";
 
 type player = {
   id: int,
@@ -9,23 +9,18 @@ type player = {
   drafted: bool,
 };
 
-/* type players = list(player); */
-
-type state =
-  | Error
-  | Loading
-  | Loaded(array(player));
-
-type action =
-  | PlayerFetch
-  | PlayersFetched(array(player))
-  | PlayersFailedToFetch;
-
 module Decode = {
-  let players = json: array(player) =>
-    Json.Decode.(
-      json |> Array.map(_, player => player)
-    );
+  let p = json =>
+    Json.Decode.{
+      id: json |> field("id", int),
+      name: json |> field("name", string),
+      position: json |> field("position", string),
+      school: json |> field("school", string),
+      drafted: json |> field("drafted", bool),
+    }
+
+    /* let players = json => Json.Decode.( json |> jsonArray(player) ) */
+    let players = json : array(player) => Json.Decode.array(p, json);
 };
 
 module Player = {
@@ -39,45 +34,54 @@ module Player = {
   }
 };
 
-let valueFromEvent = (evt) : string => (
-  evt
-  |> ReactEventRe.Form.target
-  |> ReactDOMRe.domElementToObj
-)##value;
-
-module Input = {
+/* module Input = {
+  type action =
+    | Change(string);
   type state = string;
   let component = ReasonReact.reducerComponent("Input");
   let make = (~onSubmit, _) => {
     ...component,
     initialState: () => "",
-    reducer: (newQuery, _text) => ReasonReact.Update(newQuery),
-    render: ({state: text, reduce}) =>
-      <input
-        value=text
-        _type="text"
-        placeholder="Write something to do"
-        onChange=(reduce((evt) => valueFromEvent(evt)))
-        onKeyDown=((evt) =>
-          if (ReactEventRe.Keyboard.key(evt) == "Enter") {
-            onSubmit(text);
-            (reduce(() => ""))()
-          }
-        )
-      />
+    /* reducer: (newQuery, _text) => ReasonReact.Update(newQuery), */
+  reducer: action =>
+    switch (action) {  
+    | Change(text) => (
+      state => ReasonReact.Update({ text })
+    )
+  },
+  render: ({state: text, send}) =>
+    <input
+      value=text
+      type_="text"
+      placeholder="Draft a player"
+      onChange=(
+        event => send(Change(ReactEvent.Form.target(event)##value))
+      )
+    />
   };
-};
+}; */
 
-let sendQuery = (evt) => Js.log("sendQuery called");
+/* PlayerList */
+type state =
+  | Error
+  | Loading
+  | Loaded(array(player));
+
+type action =
+  | PlayersFetch
+  | PlayersFetched(array(player))
+  | PlayersFailedToFetch;
+
+let sendQuery = (_evt) => Js.log("sendQuery called");
 
 let component = ReasonReact.reducerComponent("PlayerList");
 
-let make = (children) => {
+let make = (_children) => {
   ...component,
-  initialState: () => Loading,
-  reducer: (action, state) =>
+  initialState: _state => Loading,
+  reducer: (action, _state) =>
     switch action {
-    | PlayerFetch =>
+    | PlayersFetch =>
       ReasonReact.UpdateWithSideEffects(
         Loading,
         (
@@ -98,16 +102,29 @@ let make = (children) => {
             )
         ),
       )
-    | PlayersFetched(_) => ReasonReact.NoUpdate
-    | PlayersFailedToFetch => ReasonReact.NoUpdate
+    | PlayersFetched(players) => ReasonReact.Update(Loaded(players))
+    | PlayersFailedToFetch => ReasonReact.Update(Error)
   },
-  render: ({state: {players}, _}) => {
-    <div className="players">
-    (
-      ReasonReact.arrayToElement(Array.of_list(
-        List.map((player) => <Player player />, players)
-      ))
-    )
-    </div>
-  },
+  didMount: self => self.send(PlayersFetch),
+  render: self =>
+    switch (self.state) {
+    | Error => <div> (ReasonReact.string("An error occurred!")) </div>
+    | Loading => <div> (ReasonReact.string("Loading...")) </div>
+    | Loaded(players) =>
+      <div>
+        <h3> (ReasonReact.string("Players")) </h3>
+        <ul>
+          (
+            players
+            |> Array.map(player =>
+              <li key=string_of_int(player.id)>(
+                /* ReasonReact.string(player.name) */
+                <Player player />
+              )</li>
+            )
+            |> ReasonReact.array
+          )
+        </ul>
+      </div>
+    },
 }
