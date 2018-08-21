@@ -1,37 +1,19 @@
-/* TODO: find out how to use env vars and make this dynamic */
-let rootUrl = "http://localhost:8080/";
+open Player;
 
-type player = {
-  id: int,
-  name: string,
-  position: string,
-  school: string,
-  drafted: bool,
-};
+/* TODO: find out how to use env vars and make this dynamic */
+let rootUrl = "http://localhost:8080/players/";
 
 module Decode = {
-  let p = json =>
+  let p = json : Player.player =>
     Json.Decode.{
       id: json |> field("id", int),
       name: json |> field("name", string),
-      position: json |> field("position", string),
       school: json |> field("school", string),
+      position: json |> field("position", string),
       drafted: json |> field("drafted", bool),
     }
-
     /* let players = json => Json.Decode.( json |> jsonArray(player) ) */
-    let players = json : array(player) => Json.Decode.array(p, json);
-};
-
-module Player = {
-  let component = ReasonReact.statelessComponent("Player");
-  let make = (~player, children) => {
-    ...component,
-    render: (self) =>
-      <div className="player">
-        (ReasonReact.string(player.name))
-      </div>
-  }
+    let players = json : array(Player.player) => Json.Decode.array(p, json)
 };
 
 /* module Input = {
@@ -65,14 +47,14 @@ module Player = {
 type state =
   | Error
   | Loading
-  | Loaded(array(player));
+  | Loaded(array(Player.player));
 
 type action =
   | PlayersFetch
-  | PlayersFetched(array(player))
-  | PlayersFailedToFetch;
+  | PlayersFetched(array(Player.player))
+  | PlayersFailedToFetch(Js.Promise.error);
 
-let sendQuery = (_evt) => Js.log("sendQuery called");
+let sendQuery = (evt) => Js.log(evt);
 
 let component = ReasonReact.reducerComponent("PlayerList");
 
@@ -95,15 +77,15 @@ let make = (_children) => {
                   |> (players => self.send(PlayersFetched(players)))
                   |> resolve
                 )
-              |> catch(_err =>
-                  Js.Promise.resolve(self.send(PlayersFailedToFetch))
+              |> catch(err =>
+                  Js.Promise.resolve(self.send(PlayersFailedToFetch(err)))
                 )
               |> ignore
             )
         ),
       )
     | PlayersFetched(players) => ReasonReact.Update(Loaded(players))
-    | PlayersFailedToFetch => ReasonReact.Update(Error)
+    | PlayersFailedToFetch(_err) => ReasonReact.Update(Error)
   },
   didMount: self => self.send(PlayersFetch),
   render: self =>
@@ -118,7 +100,6 @@ let make = (_children) => {
             players
             |> Array.map(player =>
               <li key=string_of_int(player.id)>(
-                /* ReasonReact.string(player.name) */
                 <Player player />
               )</li>
             )

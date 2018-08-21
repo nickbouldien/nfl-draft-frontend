@@ -17,7 +17,9 @@ function make(player, _) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              return React.createElement("div", undefined, player);
+              return React.createElement("div", {
+                          className: "player"
+                        }, player[/* name */1]);
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],

@@ -4,10 +4,13 @@ import * as ReactDOMRe from "reason-react/src/ReactDOMRe.js";
 import * as ReasonReact from "reason-react/src/ReasonReact.js";
 import * as Component1$Nfldraftreason from "./Component1.bs.js";
 import * as Component2$Nfldraftreason from "./Component2.bs.js";
+import * as PlayerList$Nfldraftreason from "./PlayerList.bs.js";
 
 ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Component1$Nfldraftreason.make("Hello!", /* array */[])), "index1");
 
 ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Component2$Nfldraftreason.make("nick!", /* array */[])), "index2");
+
+ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, PlayerList$Nfldraftreason.make(/* array */[])), "root");
 
 export {
   
