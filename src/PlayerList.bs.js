@@ -8,7 +8,7 @@ import * as Json_decode from "@glennsl/bs-json/src/Json_decode.bs.js";
 import * as ReasonReact from "reason-react/src/ReasonReact.js";
 import * as Player$Nfldraftreason from "./Player.bs.js";
 
-var rootUrl = "http://localhost:8080/players/";
+var rootUrl = "http://localhost:8080/";
 
 function p(json) {
   return /* record */[
@@ -74,7 +74,7 @@ function make() {
                 return /* UpdateWithSideEffects */Block.__(2, [
                           /* Loading */1,
                           (function (self) {
-                              fetch(rootUrl).then((function (prim) {
+                              fetch("http://localhost:8080/players/").then((function (prim) {
                                           return prim.json();
                                         })).then((function (json) {
                                         var players = Json_decode.array(p, json);

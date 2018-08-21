@@ -8,9 +8,9 @@ type player = {
   drafted: bool,
 };
 
-let make = (~player, children) => {
+let make = (~player, _children) => {
   ...component,
-  render: (self) =>
+  render: (_self) =>
     <div className="player">
       (ReasonReact.string(player.name))
     </div>

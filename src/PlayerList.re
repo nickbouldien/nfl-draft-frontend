@@ -1,7 +1,7 @@
 open Player;
 
 /* TODO: find out how to use env vars and make this dynamic */
-let rootUrl = "http://localhost:8080/players/";
+let rootUrl = "http://localhost:8080/";
 
 module Decode = {
   let p = json : Player.player =>
@@ -69,7 +69,7 @@ let make = (_children) => {
         (
           self =>
             Js.Promise.(
-              Fetch.fetch(rootUrl)
+              Fetch.fetch(rootUrl ++ "players/")
               |> then_(Fetch.Response.json)
               |> then_(json =>
                   json
