@@ -6,6 +6,7 @@ import * as Curry from "bs-platform/lib/es6/curry.js";
 import * as React from "react";
 import * as Json_decode from "@glennsl/bs-json/src/Json_decode.bs.js";
 import * as ReasonReact from "reason-react/src/ReasonReact.js";
+import * as Button$Nfldraftreason from "./Button.bs.js";
 import * as Player$Nfldraftreason from "./Player.bs.js";
 
 var rootUrl = "http://localhost:8080/";
@@ -62,7 +63,9 @@ function make() {
                                       return React.createElement("li", {
                                                   key: String(player[/* id */0])
                                                 }, ReasonReact.element(undefined, undefined, Player$Nfldraftreason.make(player, /* array */[])));
-                                    }), match[0])));
+                                    }), match[0])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                                      return Curry._1(self[/* send */3], /* PlayersFetch */0);
+                                    }), "Submit", /* array */[])));
               }
             }),
           /* initialState */(function () {

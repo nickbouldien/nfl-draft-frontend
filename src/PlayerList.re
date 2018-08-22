@@ -106,6 +106,9 @@ let make = (_children) => {
             |> ReasonReact.array
           )
         </ul>
+
+        <Button func={_evt => self.send(PlayersFetch)} message="Submit" />
+
       </div>
     },
 }
