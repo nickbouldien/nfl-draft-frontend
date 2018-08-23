@@ -30,12 +30,7 @@ var Decode = /* module */[
   /* players */players
 ];
 
-function sendQuery(evt) {
-  console.log(evt);
-  return /* () */0;
-}
-
-var component = ReasonReact.reducerComponent("PlayerList");
+var component = ReasonReact.reducerComponent("Input");
 
 function make() {
   return /* record */[
@@ -43,13 +38,61 @@ function make() {
           /* reactClassInternal */component[/* reactClassInternal */1],
           /* handedOffState */component[/* handedOffState */2],
           /* willReceiveProps */component[/* willReceiveProps */3],
-          /* didMount */(function (self) {
-              return Curry._1(self[/* send */3], /* PlayersFetch */0);
-            }),
+          /* didMount */component[/* didMount */4],
           /* didUpdate */component[/* didUpdate */5],
           /* willUnmount */component[/* willUnmount */6],
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
+          /* render */(function (param) {
+              var send = param[/* send */3];
+              return React.createElement("input", {
+                          placeholder: "Draft a player",
+                          type: "text",
+                          value: param[/* state */1],
+                          onChange: (function ($$event) {
+                              return Curry._1(send, /* Change */[$$event.target.value]);
+                            })
+                        });
+            }),
+          /* initialState */(function () {
+              return "";
+            }),
+          /* retainedProps */component[/* retainedProps */11],
+          /* reducer */(function (action) {
+              var text = action[0];
+              return (function () {
+                  return /* Update */Block.__(0, [text]);
+                });
+            }),
+          /* jsElementWrapped */component[/* jsElementWrapped */13]
+        ];
+}
+
+var Input = /* module */[
+  /* component */component,
+  /* make */make
+];
+
+function sendQuery(evt) {
+  console.log(evt);
+  return /* () */0;
+}
+
+var component$1 = ReasonReact.reducerComponent("PlayerList");
+
+function make$1() {
+  return /* record */[
+          /* debugName */component$1[/* debugName */0],
+          /* reactClassInternal */component$1[/* reactClassInternal */1],
+          /* handedOffState */component$1[/* handedOffState */2],
+          /* willReceiveProps */component$1[/* willReceiveProps */3],
+          /* didMount */(function (self) {
+              return Curry._1(self[/* send */3], /* PlayersFetch */0);
+            }),
+          /* didUpdate */component$1[/* didUpdate */5],
+          /* willUnmount */component$1[/* willUnmount */6],
+          /* willUpdate */component$1[/* willUpdate */7],
+          /* shouldUpdate */component$1[/* shouldUpdate */8],
           /* render */(function (self) {
               var match = self[/* state */1];
               if (typeof match === "number") {
@@ -63,7 +106,7 @@ function make() {
                                       return React.createElement("li", {
                                                   key: String(player[/* id */0])
                                                 }, ReasonReact.element(undefined, undefined, Player$Nfldraftreason.make(player, /* array */[])));
-                                    }), match[0])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                                    }), match[0])), ReasonReact.element(undefined, undefined, make(/* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
                                       return Curry._1(self[/* send */3], /* PlayersFetch */0);
                                     }), "Submit", /* array */[])));
               }
@@ -71,7 +114,7 @@ function make() {
           /* initialState */(function () {
               return /* Loading */1;
             }),
-          /* retainedProps */component[/* retainedProps */11],
+          /* retainedProps */component$1[/* retainedProps */11],
           /* reducer */(function (action, _) {
               if (typeof action === "number") {
                 return /* UpdateWithSideEffects */Block.__(2, [
@@ -94,16 +137,17 @@ function make() {
                 return /* Update */Block.__(0, [/* Loaded */[action[0]]]);
               }
             }),
-          /* jsElementWrapped */component[/* jsElementWrapped */13]
+          /* jsElementWrapped */component$1[/* jsElementWrapped */13]
         ];
 }
 
 export {
   rootUrl ,
   Decode ,
+  Input ,
   sendQuery ,
-  component ,
-  make ,
+  component$1 as component,
+  make$1 as make,
   
 }
 /* component Not a pure module */

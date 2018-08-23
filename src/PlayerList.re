@@ -16,12 +16,12 @@ module Decode = {
     let players = json : array(Player.player) => Json.Decode.array(p, json)
 };
 
-/* module Input = {
+module Input = {
   type action =
     | Change(string);
   type state = string;
   let component = ReasonReact.reducerComponent("Input");
-  let make = (~onSubmit, _) => {
+  let make = ( _) => {
     ...component,
     initialState: () => "",
     /* reducer: (newQuery, _text) => ReasonReact.Update(newQuery), */
@@ -41,7 +41,7 @@ module Decode = {
       )
     />
   };
-}; */
+};
 
 /* PlayerList */
 type state =
@@ -106,6 +106,8 @@ let make = (_children) => {
             |> ReasonReact.array
           )
         </ul>
+
+        <Input />
 
         <Button func={_evt => self.send(PlayersFetch)} message="Submit" />
 
