@@ -19,7 +19,7 @@ let make = (~player, _children) => {
         <br />
       </p>
         (ReasonReact.string(string_of_int(player.id)))
-      <a href=("/" ++ string_of_int(player.id))> (ReasonReact.string("Go to profile")) </a>
+      <a href=("/player/" ++ string_of_int(player.id))> (ReasonReact.string("Go to profile")) </a>
       /* <Button  message="Draft player" disabled={player.drafted === true} /> */
     </div>
 }

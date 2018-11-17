@@ -3,6 +3,7 @@ open Player;
 /* TODO: find out how to use env vars and make this dynamic */
 let rootUrl = "http://localhost:8080/";
 
+/* FIXME: stop using modules here! */
 module Decode = {
   let p = json : Player.player =>
     Json.Decode.{
