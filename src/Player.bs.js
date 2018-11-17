@@ -20,8 +20,8 @@ function make(player, _) {
           /* render */(function () {
               return React.createElement("div", {
                           className: "player"
-                        }, React.createElement("p", undefined, React.createElement("b", undefined, player[/* name */1]), React.createElement("br", undefined), "Drafted: " + Pervasives.string_of_bool(player[/* drafted */4]), React.createElement("br", undefined)), String(player[/* id */0]), React.createElement("a", {
-                              href: "/" + String(player[/* id */0])
+                        }, React.createElement("p", undefined, React.createElement("b", undefined, player[/* name */2]), React.createElement("br", undefined), "Drafted: " + Pervasives.string_of_bool(player[/* drafted */0]), React.createElement("br", undefined)), String(player[/* id */1]), React.createElement("a", {
+                              href: "/" + String(player[/* id */1])
                             }, "Go to profile"));
             }),
           /* initialState */component[/* initialState */10],

@@ -13,11 +13,11 @@ var rootUrl = "http://localhost:8080/";
 
 function p(json) {
   return /* record */[
+          /* drafted */Json_decode.field("drafted", Json_decode.bool, json),
           /* id */Json_decode.field("id", Json_decode.$$int, json),
           /* name */Json_decode.field("name", Json_decode.string, json),
-          /* school */Json_decode.field("school", Json_decode.string, json),
           /* position */Json_decode.field("position", Json_decode.string, json),
-          /* drafted */Json_decode.field("drafted", Json_decode.bool, json)
+          /* school */Json_decode.field("school", Json_decode.string, json)
         ];
 }
 
@@ -102,13 +102,13 @@ function make$1() {
                   return React.createElement("div", undefined, "An error occurred!");
                 }
               } else {
-                return React.createElement("div", undefined, React.createElement("h3", undefined, "Players"), React.createElement("ul", undefined, $$Array.map((function (player) {
-                                      return React.createElement("li", {
-                                                  key: String(player[/* id */0])
-                                                }, ReasonReact.element(undefined, undefined, Player$Nfldraftreason.make(player, /* array */[])));
-                                    }), match[0])), ReasonReact.element(undefined, undefined, make(/* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                return React.createElement("div", undefined, React.createElement("h3", undefined, "Players"), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
                                       return Curry._1(self[/* send */3], /* PlayersFetch */0);
-                                    }), "Submit", /* array */[])));
+                                    }), "Submit", /* array */[])), React.createElement("ul", undefined, $$Array.map((function (player) {
+                                      return React.createElement("li", {
+                                                  key: String(player[/* id */1])
+                                                }, ReasonReact.element(undefined, undefined, Player$Nfldraftreason.make(player, /* array */[])));
+                                    }), match[0])));
               }
             }),
           /* initialState */(function () {

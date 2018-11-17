@@ -44,12 +44,20 @@ module Input = {
 };
 
 /* PlayerList */
+/* type state = {
+  error: bool,
+  loading: bool,
+  players: array(Player.player),
+  text: string,
+} */
+
 type state =
   | Error
   | Loading
   | Loaded(array(Player.player));
 
 type action =
+  /* | ChangeText(string) */
   | PlayersFetch
   | PlayersFetched(array(Player.player))
   | PlayersFailedToFetch(Js.Promise.error);
@@ -61,7 +69,7 @@ let component = ReasonReact.reducerComponent("PlayerList");
 let make = (_children) => {
   ...component,
   initialState: _state => Loading,
-  reducer: (action, _state) =>
+  reducer: (action, state) =>
     switch action {
     | PlayersFetch =>
       ReasonReact.UpdateWithSideEffects(
@@ -88,13 +96,18 @@ let make = (_children) => {
     | PlayersFailedToFetch(_err) => ReasonReact.Update(Error)
   },
   didMount: self => self.send(PlayersFetch),
-  render: self =>
+  render: self => {
     switch (self.state) {
     | Error => <div> (ReasonReact.string("An error occurred!")) </div>
     | Loading => <div> (ReasonReact.string("Loading...")) </div>
     | Loaded(players) =>
       <div>
         <h3> (ReasonReact.string("Players")) </h3>
+
+        /* <Input /> */
+
+        <Button func={_evt => self.send(PlayersFetch)} message="Submit" />
+
         <ul>
           (
             players
@@ -107,10 +120,7 @@ let make = (_children) => {
           )
         </ul>
 
-        <Input />
-
-        <Button func={_evt => self.send(PlayersFetch)} message="Submit" />
-
       </div>
-    },
+    }
+  }
 }

@@ -1,11 +1,11 @@
 let component = ReasonReact.statelessComponent("Player");
 
 type player = {
+  drafted: bool,
   id: int,
   name: string,
-  school: string,
   position: string,
-  drafted: bool,
+  school: string,
 };
 
 let make = (~player, _children) => {
