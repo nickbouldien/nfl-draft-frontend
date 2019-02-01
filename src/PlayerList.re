@@ -13,35 +13,8 @@ module Decode = {
       position: json |> field("position", string),
       drafted: json |> field("drafted", bool),
     }
-    /* let players = json => Json.Decode.( json |> jsonArray(player) ) */
-    let players = json : array(Player.player) => Json.Decode.array(p, json)
-};
-
-module Input = {
-  type action =
-    | Change(string);
-  type state = string;
-  let component = ReasonReact.reducerComponent("Input");
-  let make = ( _) => {
-    ...component,
-    initialState: () => "",
-    /* reducer: (newQuery, _text) => ReasonReact.Update(newQuery), */
-  reducer: action =>
-    switch (action) {  
-    | Change(text) => (
-      state => ReasonReact.Update({ text })
-    )
-  },
-  render: ({state: text, send}) =>
-    <input
-      value=text
-      type_="text"
-      placeholder="Draft a player"
-      onChange=(
-        event => send(Change(ReactEvent.Form.target(event)##value))
-      )
-    />
-  };
+  /* let players = json => Json.Decode.( json |> jsonArray(player) ) */
+  let players = json : array(Player.player) => Json.Decode.array(p, json)
 };
 
 /* PlayerList */
@@ -58,43 +31,62 @@ type state =
   | Loaded(array(Player.player));
 
 type action =
-  /* | ChangeText(string) */
   | PlayersFetch
   | PlayersFetched(array(Player.player))
-  | PlayersFailedToFetch(Js.Promise.error);
-
-let sendQuery = (evt) => Js.log(evt);
+  | PlayersFailedToFetch; /* Js.Promise.error */
 
 let component = ReasonReact.reducerComponent("PlayerList");
+
+/* let fetchPlayers = (_) =>
+  Js.Promise.(
+    Fetch.fetchWithInit(
+      rootUrl ++ "players/",
+      Fetch.RequestInit.make(
+        ~mode=Fetch.NoCORS,
+        (),
+      ),
+    )
+      |> then_(Fetch.Response.json)
+      |> then_(json => json |> Decode.players |> (players => Some(players) |> resolve))
+      |> catch(_err => Js.Promise.resolve(None))
+      /* |> ignore */
+  ); */
 
 let make = (_children) => {
   ...component,
   initialState: _state => Loading,
-  reducer: (action, state) =>
+  reducer: (action, _state) =>
     switch action {
     | PlayersFetch =>
       ReasonReact.UpdateWithSideEffects(
         Loading,
         (
           self =>
-            Js.Promise.(
-              Fetch.fetch(rootUrl ++ "players/")
-              |> then_(Fetch.Response.json)
-              |> then_(json =>
-                  json
-                  |> Decode.players
-                  |> (players => self.send(PlayersFetched(players)))
-                  |> resolve
-                )
-              |> catch(err =>
-                  Js.Promise.resolve(self.send(PlayersFailedToFetch(err)))
-                )
-              |> ignore
+          Js.Promise.(
+            Fetch.fetchWithInit(
+              rootUrl ++ "players/",
+              Fetch.RequestInit.make(
+                ~mode=Fetch.CORS,
+                (),
+              ),
             )
+            |> then_(Fetch.Response.json)
+            |> then_(json =>
+                json
+                |> Decode.players
+                |> (players => self.send(PlayersFetched(players)))
+                |> resolve
+              )
+            |> catch(err => {
+                Js.log(err)
+                Js.Promise.resolve(self.send(PlayersFailedToFetch))
+            })
+            |> ignore
+          )
         ),
       )
     | PlayersFetched(players) => ReasonReact.Update(Loaded(players))
-    | PlayersFailedToFetch(_err) => ReasonReact.Update(Error)
+    | PlayersFailedToFetch => ReasonReact.Update(Error)
   },
   didMount: self => self.send(PlayersFetch),
   render: self => {
@@ -104,8 +96,6 @@ let make = (_children) => {
     | Loaded(players) =>
       <div>
         <h3> (ReasonReact.string("Players")) </h3>
-
-        /* <Input /> */
 
         <Button func={_evt => self.send(PlayersFetch)} message="Submit" />
 
@@ -120,7 +110,6 @@ let make = (_children) => {
             |> ReasonReact.array
           )
         </ul>
-
       </div>
     }
   }
