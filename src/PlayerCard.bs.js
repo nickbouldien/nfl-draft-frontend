@@ -2,12 +2,11 @@
 'use strict';
 
 var React = require("react");
-var Pervasives = require("bs-platform/lib/js/pervasives.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
-var component = ReasonReact.statelessComponent("Player");
+var component = ReasonReact.statelessComponent("PlayerCard");
 
-function make(player, _) {
+function make(name, id, drafted, draft, position, school, _) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -20,10 +19,10 @@ function make(player, _) {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
               return React.createElement("div", {
-                          className: "player"
-                        }, React.createElement("p", undefined, React.createElement("b", undefined, player[/* name */2]), React.createElement("br", undefined), "Drafted: " + Pervasives.string_of_bool(player[/* drafted */0]), React.createElement("br", undefined)), String(player[/* id */1]), React.createElement("a", {
-                              href: "/player/" + String(player[/* id */1])
-                            }, "Go to profile"));
+                          className: "player-card"
+                        }, React.createElement("p", undefined, String(id) + " ", name), React.createElement("p", undefined, "position: " + position), React.createElement("p", undefined, "school: " + school), drafted ? null : React.createElement("button", {
+                                onClick: draft
+                              }, "Draft player " + String(id)));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
