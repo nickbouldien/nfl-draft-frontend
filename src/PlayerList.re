@@ -30,7 +30,8 @@ type action =
   | PlayersFetch
   | PlayersFetched(array(player))
   | PlayersFailedToFetch
-  | DraftPlayer(string);
+  | DraftPlayer(string)
+  | Reset;
 
 let component = ReasonReact.reducerComponent("PlayerList");
 
@@ -95,6 +96,30 @@ let make = (_children) => {
         )
       ),
     )
+    | Reset => ReasonReact.UpdateWithSideEffects(
+      Loading,
+      (
+        self =>
+        Js.Promise.(
+          Fetch.fetchWithInit(
+            rootUrl ++ "reset",
+            Fetch.RequestInit.make(
+              ~mode=Fetch.CORS,
+              (),
+            ),
+          )
+          |> then_(Fetch.Response.json)
+          |> then_(_json =>
+              Js.Promise.resolve(self.send(PlayersFetch))
+            )
+          |> catch(err => {
+              Js.log(err)
+              Js.Promise.resolve(self.send(PlayersFetch))
+          })
+          |> ignore
+        )
+      ),
+    )    
   },
   didMount: self => self.send(PlayersFetch),
   render: self => {
@@ -106,6 +131,8 @@ let make = (_children) => {
         <h3> (ReasonReact.string("NFL Draft Reason")) </h3>
 
         <Button func={_evt => self.send(PlayersFetch)} message="Refetch players" />
+
+        <Button func={_evt => self.send(Reset)} message="Reset all" />
 
         <div className="container">
           <div className="players undrafted-section">

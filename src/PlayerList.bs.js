@@ -68,7 +68,9 @@ function make() {
                 var num$1 = draftedPlayers.length;
                 return React.createElement("div", undefined, React.createElement("h3", undefined, "NFL Draft Reason"), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
                                       return Curry._1(self[/* send */3], /* PlayersFetch */0);
-                                    }), "Refetch players", /* array */[])), React.createElement("div", {
+                                    }), "Refetch players", /* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                                      return Curry._1(self[/* send */3], /* Reset */2);
+                                    }), "Reset all", /* array */[])), React.createElement("div", {
                                 className: "container"
                               }, React.createElement("div", {
                                     className: "players undrafted-section"
@@ -91,24 +93,41 @@ function make() {
           /* retainedProps */component[/* retainedProps */11],
           /* reducer */(function (action, _) {
               if (typeof action === "number") {
-                if (action === 0) {
-                  return /* UpdateWithSideEffects */Block.__(2, [
-                            /* Loading */1,
-                            (function (self) {
-                                fetch("http://localhost:8080/players/", Fetch.RequestInit[/* make */0](undefined, undefined, undefined, undefined, undefined, /* CORS */3, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
-                                            return prim.json();
-                                          })).then((function (json) {
-                                          var players = Json_decode.array(p, json);
-                                          return Promise.resolve(Curry._1(self[/* send */3], /* PlayersFetched */Block.__(0, [players])));
-                                        })).catch((function (err) {
-                                        console.log(err);
-                                        return Promise.resolve(Curry._1(self[/* send */3], /* PlayersFailedToFetch */1));
-                                      }));
-                                return /* () */0;
-                              })
-                          ]);
-                } else {
-                  return /* Update */Block.__(0, [/* Error */0]);
+                switch (action) {
+                  case 0 : 
+                      return /* UpdateWithSideEffects */Block.__(2, [
+                                /* Loading */1,
+                                (function (self) {
+                                    fetch("http://localhost:8080/players/", Fetch.RequestInit[/* make */0](undefined, undefined, undefined, undefined, undefined, /* CORS */3, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
+                                                return prim.json();
+                                              })).then((function (json) {
+                                              var players = Json_decode.array(p, json);
+                                              return Promise.resolve(Curry._1(self[/* send */3], /* PlayersFetched */Block.__(0, [players])));
+                                            })).catch((function (err) {
+                                            console.log(err);
+                                            return Promise.resolve(Curry._1(self[/* send */3], /* PlayersFailedToFetch */1));
+                                          }));
+                                    return /* () */0;
+                                  })
+                              ]);
+                  case 1 : 
+                      return /* Update */Block.__(0, [/* Error */0]);
+                  case 2 : 
+                      return /* UpdateWithSideEffects */Block.__(2, [
+                                /* Loading */1,
+                                (function (self) {
+                                    fetch("http://localhost:8080/reset", Fetch.RequestInit[/* make */0](undefined, undefined, undefined, undefined, undefined, /* CORS */3, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
+                                                return prim.json();
+                                              })).then((function () {
+                                              return Promise.resolve(Curry._1(self[/* send */3], /* PlayersFetch */0));
+                                            })).catch((function (err) {
+                                            console.log(err);
+                                            return Promise.resolve(Curry._1(self[/* send */3], /* PlayersFetch */0));
+                                          }));
+                                    return /* () */0;
+                                  })
+                              ]);
+                  
                 }
               } else if (action.tag) {
                 var id = action[0];
