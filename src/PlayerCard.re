@@ -21,7 +21,7 @@ let make = (~name, ~id, ~drafted, ~draft, ~position, ~school, _children) => {
           : <button
               onClick = draft
             >
-              (ReasonReact.string("Draft player " ++ string_of_int(id)))
+              (ReasonReact.string("Draft player"))
             </button>
       )
     </div>

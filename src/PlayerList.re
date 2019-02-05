@@ -1,4 +1,4 @@
-/* TODO: find out how to use env vars and make this dynamic */
+/* TODO: use env vars and make this dynamic */
 let rootUrl = "http://localhost:8080/";
 
 type player = {
@@ -9,7 +9,6 @@ type player = {
   school: string,
 };
 
-/* FIXME: stop using modules here! */
 module Decode = {
   let p = json : player =>
     Json.Decode.{
@@ -30,7 +29,7 @@ type state =
 type action =
   | PlayersFetch
   | PlayersFetched(array(player))
-  | PlayersFailedToFetch/* Js.Promise.error */
+  | PlayersFailedToFetch
   | DraftPlayer(string);
 
 let component = ReasonReact.reducerComponent("PlayerList");
@@ -111,53 +110,64 @@ let make = (_children) => {
         <div className="container">
           <div className="players undrafted-section">
             <h3> (ReasonReact.string("undrafted players")) </h3>
-            <ul>
-              (
-                players
-                |> Array.to_list
-                |> List.filter(player => player.drafted == false)
-                |> Array.of_list
-                |> Array.map(player =>
-                  <div key=string_of_int(player.id)>
-                    <PlayerCard
-                      name = player.name
-                      id = player.id
-                      drafted = player.drafted
-                      draft=(_event => self.send(DraftPlayer(string_of_int(player.id))))
-                      /* draft = ((_event) => Js.log("clicked! " ++ string_of_int(player.id))) */
-                      position = player.position
-                      school = player.school
-                    />
-                  </div>
-                )
-                |> ReasonReact.array
-              )
-            </ul>
+            <div>
+              {
+                let undraftedPlayers = players
+                  |> Array.to_list
+                  |> List.filter(player => player.drafted == false)
+                  |> Array.of_list
+
+                let num = Array.length(undraftedPlayers)
+                  switch num {
+                  | 0 => <p>(ReasonReact.string("no undrafted players"))</p>
+                  | _ =>
+                    undraftedPlayers
+                    |> Array.map(player =>
+                      <PlayerCard
+                        key = string_of_int(player.id)
+                        name = player.name
+                        id = player.id
+                        drafted = player.drafted
+                        draft=(_event => self.send(DraftPlayer(string_of_int(player.id))))
+                        position = player.position
+                        school = player.school
+                      />
+                    )
+                    |> ReasonReact.array
+                  };                   
+              }
+            </div>
           </div>
 
           <div className="players drafted-section">
             <h3> (ReasonReact.string("drafted players")) </h3>
-            <ul>
-              (
-                players
-                |> Array.to_list
-                |> List.filter(player => player.drafted == true)
-                |> Array.of_list
-                |> Array.map(player =>
-                  <div key=string_of_int(player.id)>
-                    <PlayerCard
-                      name = player.name
-                      id = player.id
-                      drafted = player.drafted
-                      draft = ((_event) => Js.log("clicked! " ++ string_of_int(player.id)))
-                      position = player.position
-                      school = player.school
-                    />
-                  </div>
-                )
-                |> ReasonReact.array
-              )
-            </ul>
+            <div>
+              {
+                let draftedPlayers = players
+                  |> Array.to_list
+                  |> List.filter(player => player.drafted == true)
+                  |> Array.of_list
+
+                let num = Array.length(draftedPlayers)
+                  switch num {
+                  | 0 => <p>(ReasonReact.string("no drafted players"))</p>
+                  | _ =>
+                    draftedPlayers
+                    |> Array.map(player =>
+                      <PlayerCard
+                        key = string_of_int(player.id)
+                        name = player.name
+                        id = player.id
+                        drafted = player.drafted
+                        draft = ((_event) => ())
+                        position = player.position
+                        school = player.school
+                      />
+                    )
+                    |> ReasonReact.array
+                  }; 
+              }
+            </div>
           </div>
         </div>
       </div>

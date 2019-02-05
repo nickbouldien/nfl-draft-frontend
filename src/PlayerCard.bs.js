@@ -22,7 +22,7 @@ function make(name, id, drafted, draft, position, school, _) {
                           className: "player-card"
                         }, React.createElement("p", undefined, String(id) + " ", name), React.createElement("p", undefined, "position: " + position), React.createElement("p", undefined, "school: " + school), drafted ? null : React.createElement("button", {
                                 onClick: draft
-                              }, "Draft player " + String(id)));
+                              }, "Draft player"));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
