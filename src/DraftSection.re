@@ -132,8 +132,8 @@ let make = (_children) => {
         <Button func={_evt => self.send(Reset)} message="Reset all" />
 
         <div className="player-section">
-          <div className="players undrafted-section">
-            <h3> (ReasonReact.string("undrafted players")) </h3>
+          <div className="players undrafted-section">            
+            <Header size="h3" message="undrafted players" />
             <div className="player-list">
               {
                 let undraftedPlayers = players
@@ -164,7 +164,7 @@ let make = (_children) => {
           </div>
 
           <div className="players drafted-section">
-            <h3> (ReasonReact.string("drafted players")) </h3>
+            <Header size="h3" message="drafted players" />
             <div className="player-list">
               {
                 let draftedPlayers = players
