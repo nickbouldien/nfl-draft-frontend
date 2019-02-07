@@ -5,7 +5,7 @@ let make = (~name, ~id, ~drafted, ~draft, ~position, ~school, _children) => {
   render: (_self) =>
     <div className="player-card">
       <p>
-        (ReasonReact.string(string_of_int(id) ++ " ")) 
+        <b>(ReasonReact.string(string_of_int(id) ++ " "))</b>
         (ReasonReact.string(name))
       </p>
       <p>

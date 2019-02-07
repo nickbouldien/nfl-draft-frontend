@@ -20,7 +20,7 @@ function make(name, id, drafted, draft, position, school, _) {
           /* render */(function () {
               return React.createElement("div", {
                           className: "player-card"
-                        }, React.createElement("p", undefined, String(id) + " ", name), React.createElement("p", undefined, "position: " + position), React.createElement("p", undefined, "school: " + school), drafted ? null : React.createElement("button", {
+                        }, React.createElement("p", undefined, React.createElement("b", undefined, String(id) + " "), name), React.createElement("p", undefined, "position: " + position), React.createElement("p", undefined, "school: " + school), drafted ? null : React.createElement("button", {
                                 onClick: draft
                               }, "Draft player"));
             }),

@@ -1,2 +1,2 @@
 
-ReactDOMRe.renderToElementWithId(<PlayerList />, "root");
+ReactDOMRe.renderToElementWithId(<App />, "root");

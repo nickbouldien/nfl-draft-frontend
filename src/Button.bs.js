@@ -6,7 +6,7 @@ var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.statelessComponent("Button");
 
-function make(func, message, _) {
+function make(func, message, classNames, _) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -19,6 +19,7 @@ function make(func, message, _) {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
               return React.createElement("button", {
+                          className: classNames,
                           onClick: func
                         }, message);
             }),

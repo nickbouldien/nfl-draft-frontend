@@ -10,6 +10,7 @@ var React = require("react");
 var Json_decode = require("@glennsl/bs-json/src/Json_decode.bs.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Button$Nfldraftreason = require("./Button.bs.js");
+var Header$Nfldraftreason = require("./Header.bs.js");
 var PlayerCard$Nfldraftreason = require("./PlayerCard.bs.js");
 
 var rootUrl = "http://localhost:8080/";
@@ -33,7 +34,7 @@ var Decode = /* module */[
   /* players */players
 ];
 
-var component = ReasonReact.reducerComponent("PlayerList");
+var component = ReasonReact.reducerComponent("DraftSection");
 
 function make() {
   return /* record */[
@@ -66,21 +67,29 @@ function make() {
                               return player[/* drafted */0] === true;
                             }))($$Array.to_list(players)));
                 var num$1 = draftedPlayers.length;
-                return React.createElement("div", undefined, React.createElement("h3", undefined, "NFL Draft Reason"), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
-                                      return Curry._1(self[/* send */3], /* PlayersFetch */0);
-                                    }), "Refetch players", /* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
-                                      return Curry._1(self[/* send */3], /* Reset */2);
-                                    }), "Reset all", /* array */[])), React.createElement("div", {
-                                className: "container"
+                return React.createElement("div", {
+                            className: "draft-section"
+                          }, React.createElement("div", {
+                                className: "button-container"
+                              }, ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                                          return Curry._1(self[/* send */3], /* PlayersFetch */0);
+                                        }), "Refetch players", "button", /* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                                          return Curry._1(self[/* send */3], /* Reset */2);
+                                        }), "Reset all", "button right", /* array */[]))), React.createElement("div", {
+                                className: "player-section"
                               }, React.createElement("div", {
                                     className: "players undrafted-section"
-                                  }, React.createElement("h3", undefined, "undrafted players"), React.createElement("div", undefined, num !== 0 ? $$Array.map((function (player) {
+                                  }, ReasonReact.element(undefined, undefined, Header$Nfldraftreason.make("undrafted players", "h3", /* array */[])), React.createElement("div", {
+                                        className: "player-list"
+                                      }, num !== 0 ? $$Array.map((function (player) {
                                                 return ReasonReact.element(String(player[/* id */1]), undefined, PlayerCard$Nfldraftreason.make(player[/* name */2], player[/* id */1], player[/* drafted */0], (function () {
                                                                   return Curry._1(self[/* send */3], /* DraftPlayer */Block.__(1, [String(player[/* id */1])]));
                                                                 }), player[/* position */3], player[/* school */4], /* array */[]));
                                               }), undraftedPlayers) : React.createElement("p", undefined, "no undrafted players"))), React.createElement("div", {
                                     className: "players drafted-section"
-                                  }, React.createElement("h3", undefined, "drafted players"), React.createElement("div", undefined, num$1 !== 0 ? $$Array.map((function (player) {
+                                  }, ReasonReact.element(undefined, undefined, Header$Nfldraftreason.make("drafted players", "h3", /* array */[])), React.createElement("div", {
+                                        className: "player-list"
+                                      }, num$1 !== 0 ? $$Array.map((function (player) {
                                                 return ReasonReact.element(String(player[/* id */1]), undefined, PlayerCard$Nfldraftreason.make(player[/* name */2], player[/* id */1], player[/* drafted */0], (function () {
                                                                   return /* () */0;
                                                                 }), player[/* position */3], player[/* school */4], /* array */[]));

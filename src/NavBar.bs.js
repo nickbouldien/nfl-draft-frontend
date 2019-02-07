@@ -4,9 +4,9 @@
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
-var component = ReasonReact.statelessComponent("Header");
+var component = ReasonReact.statelessComponent("NavBar");
 
-function make(message, size, _) {
+function make() {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -18,24 +18,7 @@ function make(message, size, _) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              switch (size) {
-                case "h1" : 
-                    return React.createElement("h1", undefined, message);
-                case "h2" : 
-                    return React.createElement("h2", undefined, message);
-                case "h3" : 
-                    return React.createElement("h3", undefined, message);
-                case "h4" : 
-                    return React.createElement("h4", undefined, message);
-                case "h5" : 
-                    return React.createElement("h5", undefined, message);
-                case "h6" : 
-                    return React.createElement("h6", undefined, message);
-                case "h7" : 
-                    return React.createElement("h7", undefined, message);
-                default:
-                  return React.createElement("h1", undefined, message);
-              }
+              return React.createElement("nav", undefined, "NFL Draft Reason");
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
