@@ -3,8 +3,8 @@
 
 var ReactDOMRe = require("reason-react/src/ReactDOMRe.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
-var PlayerList$Nfldraftreason = require("./PlayerList.bs.js");
+var App$Nfldraftreason = require("./App.bs.js");
 
-ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, PlayerList$Nfldraftreason.make(/* array */[])), "root");
+ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, App$Nfldraftreason.make(/* array */[])), "root");
 
 /*  Not a pure module */

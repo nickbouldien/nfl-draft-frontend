@@ -5,5 +5,5 @@ let make = (~message, _children) => {
   render: _self =>
     <h2>
       (ReasonReact.string(message))
-    </h2>,
+    </h2>
 };

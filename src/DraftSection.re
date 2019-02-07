@@ -33,7 +33,7 @@ type action =
   | DraftPlayer(string)
   | Reset;
 
-let component = ReasonReact.reducerComponent("PlayerList");
+let component = ReasonReact.reducerComponent("DraftSection");
 
 let make = (_children) => {
   ...component,
@@ -80,7 +80,6 @@ let make = (_children) => {
             Fetch.RequestInit.make(
               ~mode=Fetch.CORS,
               ~method_=Fetch.Post,
-              /* ~body=Fetch.BodyInit.make(Js.Json.stringify(Js.Json.object_(payload))), */
               (),
             ),
           )
@@ -127,17 +126,15 @@ let make = (_children) => {
     | Error => <div> (ReasonReact.string("An error occurred!")) </div>
     | Loading => <div> (ReasonReact.string("Loading...")) </div>
     | Loaded(players) =>
-      <div>
-        <h3> (ReasonReact.string("NFL Draft Reason")) </h3>
-
+      <div className="draft-section">
         <Button func={_evt => self.send(PlayersFetch)} message="Refetch players" />
 
         <Button func={_evt => self.send(Reset)} message="Reset all" />
 
-        <div className="container">
+        <div className="player-section">
           <div className="players undrafted-section">
             <h3> (ReasonReact.string("undrafted players")) </h3>
-            <div>
+            <div className="player-list">
               {
                 let undraftedPlayers = players
                   |> Array.to_list
@@ -168,7 +165,7 @@ let make = (_children) => {
 
           <div className="players drafted-section">
             <h3> (ReasonReact.string("drafted players")) </h3>
-            <div>
+            <div className="player-list">
               {
                 let draftedPlayers = players
                   |> Array.to_list

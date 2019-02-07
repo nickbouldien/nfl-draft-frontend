@@ -33,7 +33,7 @@ var Decode = /* module */[
   /* players */players
 ];
 
-var component = ReasonReact.reducerComponent("PlayerList");
+var component = ReasonReact.reducerComponent("DraftSection");
 
 function make() {
   return /* record */[
@@ -66,21 +66,27 @@ function make() {
                               return player[/* drafted */0] === true;
                             }))($$Array.to_list(players)));
                 var num$1 = draftedPlayers.length;
-                return React.createElement("div", undefined, React.createElement("h3", undefined, "NFL Draft Reason"), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                return React.createElement("div", {
+                            className: "draft-section"
+                          }, ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
                                       return Curry._1(self[/* send */3], /* PlayersFetch */0);
                                     }), "Refetch players", /* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
                                       return Curry._1(self[/* send */3], /* Reset */2);
                                     }), "Reset all", /* array */[])), React.createElement("div", {
-                                className: "container"
+                                className: "player-section"
                               }, React.createElement("div", {
                                     className: "players undrafted-section"
-                                  }, React.createElement("h3", undefined, "undrafted players"), React.createElement("div", undefined, num !== 0 ? $$Array.map((function (player) {
+                                  }, React.createElement("h3", undefined, "undrafted players"), React.createElement("div", {
+                                        className: "player-list"
+                                      }, num !== 0 ? $$Array.map((function (player) {
                                                 return ReasonReact.element(String(player[/* id */1]), undefined, PlayerCard$Nfldraftreason.make(player[/* name */2], player[/* id */1], player[/* drafted */0], (function () {
                                                                   return Curry._1(self[/* send */3], /* DraftPlayer */Block.__(1, [String(player[/* id */1])]));
                                                                 }), player[/* position */3], player[/* school */4], /* array */[]));
                                               }), undraftedPlayers) : React.createElement("p", undefined, "no undrafted players"))), React.createElement("div", {
                                     className: "players drafted-section"
-                                  }, React.createElement("h3", undefined, "drafted players"), React.createElement("div", undefined, num$1 !== 0 ? $$Array.map((function (player) {
+                                  }, React.createElement("h3", undefined, "drafted players"), React.createElement("div", {
+                                        className: "player-list"
+                                      }, num$1 !== 0 ? $$Array.map((function (player) {
                                                 return ReasonReact.element(String(player[/* id */1]), undefined, PlayerCard$Nfldraftreason.make(player[/* name */2], player[/* id */1], player[/* drafted */0], (function () {
                                                                   return /* () */0;
                                                                 }), player[/* position */3], player[/* school */4], /* array */[]));

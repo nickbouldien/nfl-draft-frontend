@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 html, body {
   height: 100%;
 }
@@ -13,7 +14,6 @@ body {
 }
 
 body, td, textarea, input {
-  /* overflow-x: hidden; */
   font-family: Helvetica Neue, Open Sans, sans-serif;
   line-height: 1.6;
   font-size: 14px;
@@ -21,31 +21,37 @@ body, td, textarea, input {
 }
 
 .container {
+  margin: 0.5rem 1rem 0 1rem;
+}
+
+.player-section {
   display: flex;
-  /* align-items: center; */
-  /* justify-content: space-between; */
 }
 
-.drafted-section {
- 
-}
-.undrafted-section {
-  
-}
-
-.player-card {
-  /* height: 130px; */
-  border: 1px solid #C4C4C4;
-  padding: 0.5rem;
-  margin: 0.5rem;
+nav {
+  color: #2f90c3;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .players {
+  flex: 1;
   text-align: center;
 }
 
-.players div {
-  flex: 1;
+.player-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   text-align: left;
-  padding-left: 1rem;
+}
+
+.player-card {
+  flex: 1;
+  border: 1px solid #C4C4C4;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+  margin: 0.5rem;
+  max-width: 18rem;
+  min-width: 14rem;
+  padding: 0.5rem;
 }
