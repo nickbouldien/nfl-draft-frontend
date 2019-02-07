@@ -29,3 +29,4 @@ This will replace the development artifact `build/Index.js` for an optimized ver
 - https://reasonml.github.io/reason-react/en/
 - https://reasonml.github.io/en/
 - https://jaredforsyth.com/posts/a-reason-react-tutorial/#3-bsconfig-json
+- https://css-tricks.com/overriding-default-button-styles/

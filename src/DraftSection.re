@@ -127,9 +127,19 @@ let make = (_children) => {
     | Loading => <div> (ReasonReact.string("Loading...")) </div>
     | Loaded(players) =>
       <div className="draft-section">
-        <Button func={_evt => self.send(PlayersFetch)} message="Refetch players" />
+        <div className="button-container">
+          <Button
+            func={_evt => self.send(PlayersFetch)}
+            message="Refetch players"
+            classNames="button"
+          />
 
-        <Button func={_evt => self.send(Reset)} message="Reset all" />
+          <Button
+            func={_evt => self.send(Reset)}
+            message="Reset all"
+            classNames="button right"
+          />
+        </div>
 
         <div className="player-section">
           <div className="players undrafted-section">            

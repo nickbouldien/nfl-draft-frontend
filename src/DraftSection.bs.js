@@ -69,11 +69,13 @@ function make() {
                 var num$1 = draftedPlayers.length;
                 return React.createElement("div", {
                             className: "draft-section"
-                          }, ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
-                                      return Curry._1(self[/* send */3], /* PlayersFetch */0);
-                                    }), "Refetch players", /* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
-                                      return Curry._1(self[/* send */3], /* Reset */2);
-                                    }), "Reset all", /* array */[])), React.createElement("div", {
+                          }, React.createElement("div", {
+                                className: "button-container"
+                              }, ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                                          return Curry._1(self[/* send */3], /* PlayersFetch */0);
+                                        }), "Refetch players", "button", /* array */[])), ReasonReact.element(undefined, undefined, Button$Nfldraftreason.make((function () {
+                                          return Curry._1(self[/* send */3], /* Reset */2);
+                                        }), "Reset all", "button right", /* array */[]))), React.createElement("div", {
                                 className: "player-section"
                               }, React.createElement("div", {
                                     className: "players undrafted-section"
