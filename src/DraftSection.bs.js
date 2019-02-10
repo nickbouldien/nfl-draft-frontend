@@ -125,7 +125,7 @@ function make() {
                       return /* UpdateWithSideEffects */Block.__(2, [
                                 /* Loading */1,
                                 (function (self) {
-                                    fetch("http://localhost:8080/reset", Fetch.RequestInit[/* make */0](undefined, undefined, undefined, undefined, undefined, /* CORS */3, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
+                                    fetch("http://localhost:8080/players/reset", Fetch.RequestInit[/* make */0](undefined, undefined, undefined, undefined, undefined, /* CORS */3, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
                                                 return prim.json();
                                               })).then((function () {
                                               return Promise.resolve(Curry._1(self[/* send */3], /* PlayersFetch */0));

@@ -101,7 +101,7 @@ let make = (_children) => {
         self =>
         Js.Promise.(
           Fetch.fetchWithInit(
-            rootUrl ++ "reset",
+            rootUrl ++ "players/reset",
             Fetch.RequestInit.make(
               ~mode=Fetch.CORS,
               (),
