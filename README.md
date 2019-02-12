@@ -1,6 +1,9 @@
 # nfl_draft_reason
 
-I had read good things about reason and wanted to mess around with it a bit, so I used this to make a super simple frontend for [https://github.com/nickbouldien/nfl_draft](https://github.com/nickbouldien/nfl_draft).  I plan to iterate on this a bit as I learn more about reason and how to better structure the app.
+This is the super simple frontend for [https://github.com/nickbouldien/nfl_draft](https://github.com/nickbouldien/nfl_draft) made with [reason](https://reasonml.github.io/) and [reason-react](https://reasonml.github.io/reason-react/).
+
+## Inspiration
+I had read good things about reason and wanted to mess around with it a bit, so I used this small project as an introduction to reason and reason-react.  I plan to iterate on this a bit as I learn more about reason and will add more functionality, refactor, and better structure the app.
 
 ## Run Project
 ```sh
